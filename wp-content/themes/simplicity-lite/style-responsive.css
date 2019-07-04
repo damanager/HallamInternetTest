@@ -1,0 +1,37 @@
+/* simplicity Theme by D5 Creation, www.d5creation.com
+/* =Responsive Design 
+-------------------------------------------------------------- */
+@media screen and (max-width:800px){
+	body{ min-width: 100%; max-width: 100%; }
+	body, #container, #top-menu-container, #header, #header-content, #content-full, .conwidth, #footer, #footer-sidebar, #footer-content, #creditline, #slide-container, #slide, #slide img, img.site-logo, h1.site-title, 	#heading, .heading-desc{max-width:100%;min-width:0;}
+	#header-content{ align-items: center; padding: 10px 20px; flex-direction: row-reverse; }
+	#heading{margin:0 auto 40px;}
+	.logotitle{ padding:0 11px 11px 11px; justify-content: flex-end; }
+	.heading-desc{clear:both;}
+	#header-bottom{ height: 300px; margin: -7px 0 -320px; }
+	#featured-boxs img.box-image{clear:both;display:block;margin-bottom:10px;}
+	#design-main-menu, #content{float:none;width:100%;}
+	#footer-sidebar #footer-widgets, #footer-sidebar #first-footer-widget{width:100%;margin:0 5px;}
+	#client img{margin:5px;max-height:50px;vertical-align:middle;width:50px;}
+	.postmetadata, .postmetadata:hover{max-width:70%;}	
+	#mobile-menu { display: flex; }
+	#main-menu-con { display: none; position: absolute; top: 100%; left: 0 !important; z-index: 999999; }
+	#main-menu-con a {  font-size: 14px; border-bottom-width: 1px !important; }	
+	#main-menu-con ul { display: inline-block; background: rgba(0,0,0,.85); margin: 0 auto; }
+	#main-menu-con a, #main-menu-con a.wccart-icon { margin: 1px auto; border-bottom: 1px solid #fffafa33; padding: 10px; width: 100%; border-radius: 0 !important;  }
+	#main-menu-con li { float: none; margin: 0 auto; width: 250px; }
+	#main-menu-con ul ul a { margin: 0 auto; width: 100%; }	
+	#main-menu-con ul ul, .sub-menu, .sub-menu ul ul { left: 20px !important; top: 90% !important; }
+	#main-menu-con li.menu-item-has-children > a::after, #main-menu-con li.page_item_has_children > a::after{ right: 5px; }	
+	#right-sidebar, #footer-sidebar { width: 100%; display: flex; justify-content: center; flex-wrap: wrap; }
+	#right-sidebar .widget, #footer-sidebar .footerwidget{ width: 250px; margin: 10px; }	
+	.social-link{margin: 5px;}
+}
+
+@media screen and (max-width:600px){
+	#header-content{ align-items: flex-start; flex-direction: column; }
+	#header-bottom{ height: 250px; margin: -7px 0 -260px; }
+	.logotitle{ padding: 10px 0; justify-content: center; align-self: center; }
+	.sb-description{ padding: 3px 5px; font-size: 11px; width: calc(100% - 10px); right: 5px; }
+	.sb-description h3{ display: none; }
+}
