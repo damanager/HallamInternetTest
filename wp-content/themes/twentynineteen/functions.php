@@ -400,9 +400,9 @@ function tt_get_quote(): void {
 		return;
 	}
 
-	$quote = get_transient( 'quot_of_the_day' );   //spelling error quote of the day spelt as quot of the day
+	$quote = get_transient( 'quote_of_the_day' );   //spelling error quote of the day spelt as quot of the day
 
-	if ( ! $qotd ) {
+	if ( ! $quote ) {  // replace quote here also
 		$curl = curl_init();
 		curl_setopt_array( $curl, [
 			CURLOPT_RETURNTRANSFER => 1,
