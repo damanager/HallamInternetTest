@@ -338,6 +338,7 @@ require get_template_directory() . '/inc/customizer.php';
 	curl_setopt_array( $curl, [
 		CURLOPT_RETURNTRANSFER => 1,
 		CURLOPT_URL            => 'https://jsonplaceholder.typicode.com/photos/' . $photo_id,
+		CURLOPT_HTTPHEADER => [ 'content-type: application/json'],  //We need to content typoe header set for receiving JSON response.
 	] );
 	$response = curl_exec( $curl );
 	curl_close( $curl );
@@ -347,7 +348,10 @@ require get_template_directory() . '/inc/customizer.php';
 	update_user_meta( $user_id, 'register_image', $data->url );
 }
 
-add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); 
+
+//add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); // The action hook should be 'user_register'
+
+add_action( 'user_register', 'tt_user_register', 10, 1 );
 
 /**
  * Captures user agent at login.
@@ -355,7 +359,8 @@ add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 );
  * @param int $user_login
  * @param WP_User $user
  */
-function tt_user_logged_in( int $user_login, WP_User $user ): void {
+//function tt_user_logged_in( int $user_login, WP_User $user ): void { //The 'User_login' Field should be of the type string.
+	function tt_user_logged_in( string $user_login, WP_User $user ): void {
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	update_user_meta( $user->ID, 'last_user_agent', $user_agent );
 }
