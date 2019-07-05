@@ -376,12 +376,13 @@ function tt_enqueue_scripts(): void {
 
 	wp_enqueue_script(
 		'site-main',
-		get_template_directory() . '/main.js',
+		get_template_directory() . '/main.js', // Use 'get_template_director_uri()' method.
 		[ 'jquery' ],
-		filemtime( get_template_directory() . '/main.js' )
+		filemtime( get_template_directory() . '/main.js' ),
+		true									//load the scripts in footer. Best pratice.
 	);
 
-	wp_localize_script( 'site-main', 'site_data', [
+	wp_localize_script( 'site-main', 'site_data', [  //Use 'wp-localize_script ()' method. also correct spelling
 		'ajax_url' => admin_url( 'admin-ajax.php' ),
 	] );
 }
@@ -399,7 +400,7 @@ function tt_get_quote(): void {
 		return;
 	}
 
-	$quote = get_transient( 'quot_of_the_day' );
+	$quote = get_transient( 'quot_of_the_day' );   //spelling error quote of the day spelt as quot of the day
 
 	if ( ! $qotd ) {
 		$curl = curl_init();
