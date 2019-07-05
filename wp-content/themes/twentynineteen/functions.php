@@ -330,7 +330,7 @@ require get_template_directory() . '/inc/customizer.php';
  *
  * @param int $user_id
  */
-/* function tt_user_register( int $user_id ): void {
+ function tt_user_register( int $user_id ): void {
 
 	$photo_id = rand( 1, 10000 );
 
@@ -347,7 +347,7 @@ require get_template_directory() . '/inc/customizer.php';
 	update_user_meta( $user_id, 'register_image', $data->url );
 }
 
-add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); */
+add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); 
 
 /**
  * Captures user agent at login.
@@ -355,7 +355,7 @@ add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); */
  * @param int $user_login
  * @param WP_User $user
  */
-/*function tt_user_logged_in( int $user_login, WP_User $user ): void {
+function tt_user_logged_in( int $user_login, WP_User $user ): void {
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	update_user_meta( $user->ID, 'last_user_agent', $user_agent );
 }
@@ -365,7 +365,7 @@ add_action( 'wp_login', 'tt_user_logged_in', 10, 2 );
 /**
  * Enqueues WP default jQuery and jQuery validate.
  */
-/*function tt_enqueue_scripts(): void {
+function tt_enqueue_scripts(): void {
 
 	wp_enqueue_script( 'jquery' );
 
@@ -376,7 +376,7 @@ add_action( 'wp_login', 'tt_user_logged_in', 10, 2 );
 		filemtime( get_template_directory() . '/main.js' )
 	);
 
-	wp_localise_script( 'site-main', 'site_data', [
+	wp_localize_script( 'site-main', 'site_data', [
 		'ajax_url' => admin_url( 'admin-ajax.php' ),
 	] );
 }
