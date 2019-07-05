@@ -412,14 +412,14 @@ function tt_get_quote(): void {
 		curl_close( $curl );
 
 		$data = json_decode( $response );
-		$qotd = $data->quote;
+		$quote = $data->quote; // Replace 'qotd' with quote
 
-		$cache_timeout = apply_filters( 'hl/quote/cache/timeout', 0 );
+		$cache_timeout = apply_filters( 'hl/quote/cache/timeout', 30 ); // Increase timeout from 0 to 30minutes 
 
-		set_transient( 'quote_of_the_day', $qotd, $cache_timeout );
+		set_transient( 'quote_of_the_day', $quote, $cache_timeout ); // quote error again
 	}
 
-	echo $qotd;
+	echo $quote;//another quote error
 	exit;
 }
 

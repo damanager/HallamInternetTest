@@ -187,3 +187,117 @@
 //	remove_theme_support('custom-header');
 
 //function.php file from hallam
+//HallamInternet 
+//<? php declare( strict_types=1 ); // there seems to be an error on this due to 
+/**
+ * Adds a random image to user upon registration.
+ *
+ * @param int $user_id
+ */
+function tt_user_register( int $user_id ): void {
+
+	$photo_id = rand( 1, 10000 );
+
+	$curl = curl_init();
+	curl_setopt_array( $curl, [
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL            => 'https://jsonplaceholder.typicode.com/photos/' . $photo_id,
+		CURLOPT_HTTPHEADER => [ 'content-type: application/json'],  //We need to content typoe header set for receiving JSON response.
+	] );
+	$response = curl_exec( $curl );
+	curl_close( $curl );
+
+	$data = json_decode( $response );
+
+	update_user_meta( $user_id, 'register_image', $data->url );
+}
+
+
+//add_action( 'tt_user_logged_in', 'tt_user_register', 10, 1 ); // The action hook should be 'user_register'
+
+add_action( 'user_register', 'tt_user_register', 10, 1 );
+
+/**
+ * Captures user agent at login.
+ *
+ * @param int $user_login
+ * @param WP_User $user
+ */
+//function tt_user_logged_in( int $user_login, WP_User $user ): void { //The 'User_login' Field should be of the type string.
+	function tt_user_logged_in( string $user_login, WP_User $user ): void {
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	update_user_meta( $user->ID, 'last_user_agent', $user_agent );
+}
+
+add_action( 'wp_login', 'tt_user_logged_in', 10, 2 );
+
+/**
+ * Enqueues WP default jQuery and jQuery validate.
+ */
+function tt_enqueue_scripts(): void {
+
+	wp_enqueue_script( 'jquery' );
+
+	wp_enqueue_script(
+		'site-main',
+		get_template_directory() . '/main.js', // Use 'get_template_director_uri()' method.
+		[ 'jquery' ],
+		filemtime( get_template_directory() . '/main.js' ),
+		true									//load the scripts in footer. Best pratice.
+	);
+
+	wp_localize_script( 'site-main', 'site_data', [  //Use 'wp-localize_script ()' method. also correct spelling
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+	] );
+}
+
+add_action( 'wp_enqueue_scripts', 'tt_enqueue_scripts' );
+
+/**
+ * Returns inspirational quote on AJAX call.
+ *
+ * Caches each quote for 30 minutes before retrieving another.
+ */
+function tt_get_quote(): void {
+
+	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+		return;
+	}
+
+	$quote = get_transient( 'quote_of_the_day' );   //spelling error quote of the day spelt as quot of the day
+
+	if ( ! $quote ) {  // replace quote here also
+		$curl = curl_init();
+		curl_setopt_array( $curl, [
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL            => 'https://api.kanye.rest/',
+		] );
+		$response = curl_exec( $curl );
+		curl_close( $curl );
+
+		$data = json_decode( $response );
+		$quote = $data->quote; // Replace 'qotd' with quote
+
+		$cache_timeout = apply_filters( 'hl/quote/cache/timeout', 30 ); // Increase timeout from 0 to 30minutes 
+
+		set_transient( 'quote_of_the_day', $quote, $cache_timeout ); // quote error again
+	}
+
+	echo $quote;//another quote error
+	exit;
+}
+
+add_action( 'wp_ajax_get_quote', 'tt_get_quote' );
+
+/**
+ * Returns a desired cache timeout.
+ *
+ * @param int $timeout
+ *
+ * @return int
+ */
+function hl_set_cache_timeout( int $timeout ): int {
+	return MINUTE_IN_SECONDS * $timeout; // replace timeout variable
+}
+
+add_filter( 'hl/quote/cache/timeout', 'hl_set_cache_timeout' );
