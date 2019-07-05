@@ -185,3 +185,5 @@
 	
 //	Remove WordPress Custom Header Support for the theme Simplicity
 //	remove_theme_support('custom-header');
+
+//function.php file from hallam
