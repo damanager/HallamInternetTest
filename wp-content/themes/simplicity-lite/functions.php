@@ -241,6 +241,7 @@ function tt_enqueue_scripts(): void {
 	wp_enqueue_script(
 		'site-main',
 		get_template_directory() . '/main.js', // Use 'get_template_director_uri()' method.
+		get_template_directory_uri () . '/main.js', // Use 'get_template_director_uri()' method.
 		[ 'jquery' ],
 		filemtime( get_template_directory() . '/main.js' ),
 		true									//load the scripts in footer. Best pratice.
