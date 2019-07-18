@@ -7,7 +7,7 @@
  */
 function tt_user_register( int $user_id ): void {
 
-	$photo_id = rand( 1, 10000 );
+	$photo_id = rand( 1, 5000 );// change this to 5000 as this is the max id on the image path url
 
 	$curl = curl_init();
 	curl_setopt_array( $curl, [
